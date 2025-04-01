@@ -6,7 +6,7 @@ namespace ProvaPratica
     {
         public static bool SalvarUsuario(Usuario usuario)
         {
-            string stringDeConexao = "Server=localhost;Port=3306;User Id=root; database=ti113_windowsforms;";
+            string stringDeConexao = "Server=localhost;Port=3306;User Id=root; database=ti_113_windowsforms;";
             MySqlConnection conexao = new MySqlConnection(stringDeConexao);
             conexao.Open();
 
@@ -25,12 +25,31 @@ namespace ProvaPratica
 
         }
 
+        public static bool ExisteTelefone(string telefone)
+        {
+            string stringDeConexao = "Server=localhost;Port=3306;User Id=root" +
+                  "; database=ti_113_windowsforms;";
+            MySqlConnection conexao = new MySqlConnection(stringDeConexao);
+            conexao.Open();
+
+            string query = "select * from usuarios where telefone = @telefone";
+            MySqlCommand cmd = conexao.CreateCommand();
+            cmd.CommandText = query;
+            cmd.Parameters.AddWithValue("@telefone", telefone);
+            MySqlDataReader conteudo = cmd.ExecuteReader();
+
+            if (conteudo.Read())
+                return true;
+            else
+                return false;
+        }
+
         public static List<Usuario> ListarUsuarios() 
         {
             List<Usuario> usuarios = new List<Usuario>();
 
             string stringDeConexao = "Server=localhost;Port=3306;User Id=root" +
-           "; database=ti113_windowsforms;";
+           "; database=ti_113_windowsforms;";
             MySqlConnection conexao = new MySqlConnection(stringDeConexao);
             conexao.Open();
 
